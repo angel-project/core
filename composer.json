@@ -1,0 +1,27 @@
+{
+  "name": "angel-framework/core",
+  "description": "auto-runs angel core methods.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Xiao Zimo",
+      "email": "xiaozimo@zuggr.com"
+    }
+  ],
+  "optimize-autoloader": true,
+  "require": {
+    "php" : "^7.1.3",
+    "angel-core/ary" : "v0.0.*",
+    "angel-core/build" : "v0.0.*",
+    "angel-core/curl" : "v0.0.*",
+    "angel-core/is" : "v0.0.*",
+    "angel-core/js" : "v0.0.*",
+    "angel-core/jump" : "v0.0.*",
+    "angel-core/run" : "v0.0.*",
+    "angel-core/sql" : "v0.0.*",
+    "angel-core/str" : "v0.0.*",
+    "angel-core/system" : "v0.0.*",
+    "angel-core/upload" : "v0.0.*",
+    "angel-core/user" : "v0.0.*"
+  }
+}
