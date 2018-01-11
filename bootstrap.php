@@ -3,7 +3,7 @@
   class bootstrap{
     function __construct(){
 
-      foreach (glob(__dir__.'/vendor/angel-core/*') as $file) {
+      foreach (glob(str_replace('/vendor/angel-framework/core','',__dir__).'/vendor/angel-core/*') as $file) {
         $method_name = basename($file);
         require_once $file.'/'.$method_name.'.php';
         class_alias('angel\\'.$method_name,$method_name);
