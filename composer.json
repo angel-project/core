@@ -21,7 +21,10 @@
     "angel-core/sql" : "v0.0.*",
     "angel-core/str" : "v0.0.*",
     "angel-core/system" : "v0.0.*",
-    "angel-core/upload" : "v0.0.*",
+    "angel-core/img" : "v0.0.*",
+    "angel-core/file" : "v0.0.*",
+    "angel-core/view" : "v0.0.*",
+    "angel-core/plug" : "v0.0.*",
     "angel-core/user" : "v0.0.*"
   }
 }
