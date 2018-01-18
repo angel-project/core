@@ -1,5 +1,5 @@
-## bootstrap::
-Core auto-loader by [Angel-Framework](https://github.com/angel-framework).
+## install
+Angel components work only under an [angel-framework environment](https://github.com/angel-framework/project).
 ```
-composer require angel-framework/core
+composer create-project angel-framework/project
 ```
