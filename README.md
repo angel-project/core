@@ -1,4 +1,4 @@
-<p align="center"><img width="220" src="http://www.zuggr.com/file/angel_core.jpg"></p>
+<p align="center"><img width="280" src="http://www.zuggr.com/file/angel_core.jpg"></p>
 
 **Angel** is a lean PHP framework that focuses on **rapid prototyping** for web applications. **Angel Core** is a pool of standalone core methods and testing modules, for testing-driven development only.
 
