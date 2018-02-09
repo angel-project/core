@@ -3,15 +3,16 @@
   class bootstrap{
     function __construct(){
 
-      foreach (glob(str_replace('\vendor\angel-framework\core','',str_replace('/vendor/angel-framework/core','',__dir__)).'/vendor/angel-core/*') as $file) {
+      foreach (glob(__dir__.'/src/*') as $file) {
         $method_name = basename($file);
         require_once $file.'/'.$method_name.'.php';
         class_alias('angel\\'.$method_name,$method_name);
       } //Autoload block files
 
-      foreach (glob(str_replace('/vendor/angel-framework/core','',__dir__).'/build/*.php') as $file) {
+      foreach (glob(str_replace('\vendor\angel-project\core','',str_replace('/vendor/angel-project/core','',__dir__)).'/build/*.php') as $file) {
         require_once $file;
       } //Autoload build files
+
 
       if($_SERVER['REQUEST_METHOD']==='POST') {
         run::post(
