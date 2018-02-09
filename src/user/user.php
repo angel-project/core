@@ -71,7 +71,7 @@
     }
 
     public static function dir() {
-      return str_replace('/vendor/angel-core/user','',__dir__);
+      return str_replace('\vendor\angel-project\core\src\user','',str_replace('/vendor/angel-project/core/src/user','',__dir__));
     }
 
   }
