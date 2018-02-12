@@ -135,7 +135,7 @@
               $flag = true;
             }
           }else{
-            if(!(strpos($value,$part)===false)){
+            if(!(strstr($value,$part)===false)){
               $flag = true;
             }
           }
