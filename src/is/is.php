@@ -129,7 +129,11 @@
               $flag = true;
             }
           }else{
+<<<<<<< HEAD
             if(!(strstr($value,$part)===false) or $value==$part){
+=======
+            if(!(strstr($value,$part)===false)){
+>>>>>>> 6d8ac29fbb52a979fc4c1fe6e498c7569aef0f9f
               $flag = true;
             }
           }
@@ -140,7 +144,11 @@
             $flag = true;
           }
         }else{
+<<<<<<< HEAD
           if(strstr($full,$part)!=false){
+=======
+          if(!(strstr($full,$part)===false)){
+>>>>>>> 6d8ac29fbb52a979fc4c1fe6e498c7569aef0f9f
             $flag = true;
           }
         }
