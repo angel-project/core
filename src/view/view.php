@@ -26,7 +26,7 @@
       ob_end_clean();
       $out = self::mobile($out);
       $out = self::mustache($out,$input);
-      $out = self::angel_if($out,$input);
+      $out = self::angel_if($out);
       return $out;
     }
 
@@ -60,14 +60,16 @@
     } //<mobile> & <desktop> special tag support
 
     private static function mustache(string $out,array $input){
-      foreach ($input as $key=>$value) {
+      foreach($input as $key=>$value){
         $out = str::replace(sprintf('{{{'.$key.'}}}'),$value,$out);
       }
       return $out;
     } //mustache support
 
     private static function angel_if(string $out){
-      return str_replace(['<angel if="yes_if">','<angel if=\'yes_if\'>','</angel>'],'',preg_replace('/((<angel if="no_if">)|(<angel if=\'no_if\'>))[\s\S]*(<\/angel>)/u','',$out));
+      $out = preg_replace('/(<angel if="no_if">)[\s\S]*?(<\/angel>)/is','',(string)$out);
+      $out = preg_replace('/(<angel if=\'no_if\'>)[\s\S]*?(<\/angel>)/is','',(string)$out);
+      return str_replace(['<angel if="yes_if">','<angel if=\'yes_if\'>','</angel>'],'',$out);
     }
 
     public static function if($in){

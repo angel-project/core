@@ -87,12 +87,6 @@
           } //if $_FILES is empty
         }elseif(empty($in_p)){
           $flag = true; //if array as whole is empty
-        }else{
-          foreach ($in_p as $value) {
-            if(empty($value)){
-              $flag = true;
-            }
-          } //if array item is empty
         }
       }else{
         if(empty($in_p)){
@@ -135,7 +129,7 @@
               $flag = true;
             }
           }else{
-            if(!(strpos($value,$part)===false)){
+            if(!(strstr($value,$part)===false) or $value==$part){
               $flag = true;
             }
           }
@@ -146,7 +140,7 @@
             $flag = true;
           }
         }else{
-          if(strpos($full,$part)!=false){
+          if(strstr($full,$part)!=false){
             $flag = true;
           }
         }
@@ -165,6 +159,15 @@
 
     public static function email(string $email){
       return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function multi_layer($input){
+      $rv = array_filter($input,'is_array');
+      if(count($rv)>0){
+        return true;
+      }else{
+        return false;
+      }
     }
 
   }

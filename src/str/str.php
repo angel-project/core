@@ -79,7 +79,11 @@
     }
 
     public static function cut(string $in_p,$limit) {
-      return mb_substr($in_p,0,$limit,'UTF-8');
+      if(is::ary($limit)){
+        return mb_substr($in_p,$limit[0],$limit[1],'UTF-8');
+      }else{
+        return mb_substr($in_p,0,$limit,'UTF-8');
+      }
     }
 
     public static function random($limit=10) {

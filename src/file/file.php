@@ -82,7 +82,7 @@
       }else{
         $to = 'other';
       }
-      if(move_uploaded_file($file['tmp_name'],user::dir().'/file/'.$to.'/'.$name.'.'.$end)){
+      if(\move_uploaded_file($file['tmp_name'],user::dir().'/file/'.$to.'/'.$name.'.'.$end)){
         return true;
       }else{
         system::add_error('file::upload()','fail_upload','fail to upload file');

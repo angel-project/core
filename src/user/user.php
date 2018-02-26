@@ -23,7 +23,7 @@
   class user {
 
     public static function uri() {
-      return ltrim(explode('?', $_SERVER['REQUEST_URI'])[0],'/');
+      return ltrim(rtrim(explode('?', $_SERVER['REQUEST_URI'])[0],'/'),'/');
     }
 
     public static function port() {
@@ -70,8 +70,28 @@
       return (isset($_SERVER['HTTPS'])?'https':'http').'://'.$_SERVER['HTTP_HOST'];
     }
 
-    public static function dir() {
-      return str_replace('\vendor\angel-project\core\src\user','',str_replace('/vendor/angel-project/core/src/user','',__dir__));
+    public static function dir($back=0) {
+      $out = str_replace('\vendor\angel-project\core\src\user','',str_replace('/vendor/angel-project/core/src/user','',__dir__));
+      if($back<0){
+        if(is::in('/',$out)){
+          $array = str::split('/',$out);
+          $out = '';
+          foreach ($array as $key=>$value) {
+            if(($key-1)<(ary::size($array)+$back) and $value!=''){
+              $out .= '/'.$value;
+            }
+          }
+        }else{
+          $array = str::split('\\',$out);
+          $out = '';
+          foreach ($array as $key=>$value) {
+            if(($key-1)<(ary::size($array)+$back) and $value!=''){
+              $out .= '\\'.$value;
+            }
+          }
+        }
+      }
+      return $out;
     }
 
   }

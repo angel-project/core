@@ -107,7 +107,7 @@
       return new sql();
     }
 
-    public function this($bind) {
+    public function this($bind,$add_on='none') {
       switch(self::$type) {
         case 'insert':
           $query = self::$query;
@@ -132,11 +132,21 @@
         case 'update':
           $query = self::$query;
           $value = [];
-          foreach ($bind as $key=>$i) {
-            $query .= $key.'=?,';
-            array_push($value,$i);
+          if(is::str($bind)){
+            if(is::ary($add_on)){
+              foreach ($add_on as $key=>$i) {
+                array_push($value,$i);
+              }
+            }
+            $query = $bind;
+          }else{
+            foreach ($bind as $key=>$i) {
+              $query .= $key.'=?,';
+              array_push($value,$i);
+            }
+            $query = rtrim($query,',');
+            //if simple equal
           }
-          $query = rtrim($query,',');
           self::$value = $value;
           self::$query = $query;
           return new sql();
@@ -215,6 +225,27 @@
         }
       }else{
         system::add_error('sql::fetch()','query_fail','"'.self::$query.'" query failed');
+      }
+    }
+
+    public function count() {
+      if($stmt = self::$connect->prepare(self::$query)){
+        $value = self::$value;
+        if(sizeof($value)!=0) {
+          $in_p = [''];
+          foreach($value as $v) {
+            $in_p[0] .= is::int($v)?'i':'s';
+            array_push($in_p,$v);
+          }
+          $stmt->bind_param(...$in_p);
+        }
+        $stmt->execute();
+        $stmt->store_result();
+        $result = $stmt->num_rows;
+        $stmt->close();
+        return $result;
+      }else{
+        system::add_error('sql::count()','query_fail','"'.self::$query.'" query failed');
       }
     }
 

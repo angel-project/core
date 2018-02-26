@@ -41,7 +41,7 @@
     }
 
     public static function to($url){
-      header('Location:'.$url);
+      echo "<script>parent.location.href='".$url."'; </script>";
     }
 
     public static function refresh(){
