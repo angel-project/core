@@ -60,4 +60,9 @@
       }
     }
 
+    public static function test($method)
+    {
+      require_once realpath(dirname(__FILE__).'/../'.$method.'/test.php');
+    }
+
   }
