@@ -60,9 +60,18 @@
       }
     }
 
-    public static function test($method)
+    public static function test($method=="all")
     {
-      require_once realpath(dirname(__FILE__).'/../'.$method.'/test.php');
+      $all_tests = ['ary','build','curl','is','js','jump','str','user'];
+      if($method=="all")
+      {
+        foreach ($all_tests as $key => $value) {
+          require_once realpath(dirname(__FILE__).'/../'.$key.'/test.php');
+        }
+      }
+      else {
+        require_once realpath(dirname(__FILE__).'/../'.$method.'/test.php');
+      }
     }
 
   }
