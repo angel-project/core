@@ -7,6 +7,6 @@
   assert(str::upper('hello world')=='HELLO WORLD'&&str::upper(['h','com'])==['H','COM']);
   assert(strlen(str::random(8))==8);
   assert(str::unix_dir('D:\angel_home')=='D:/angel_home');
-  assert(str::windows_dir('C:/path')=='C:/path');
+  assert(str::windows_dir('C:/path')=='C:\path');
   echo 'String Test Finished!'."<br>";
  ?>
