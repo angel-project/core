@@ -60,12 +60,12 @@
       }
     }
 
-    public static function test($method=="all")
+    public static function test($method="all")
     {
       $all_tests = ['ary','build','curl','is','js','jump','str','user'];
       if($method=="all")
       {
-        foreach ($all_tests as $key => $value) {
+        foreach ($all_tests as $key) {
           require_once realpath(dirname(__FILE__).'/../'.$key.'/test.php');
         }
       }
