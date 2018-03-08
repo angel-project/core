@@ -76,13 +76,18 @@
   class file {
 
     public static function upload($file,$name){
-      $end = str::lower(ary::last(str::split(".",$file['name'])));
-      if(is::in($end,['json','txt','zip'])){
-        $to = $end;
+      if(!is::dir()){
+        $end = str::lower(ary::last(str::split(".",$file['name'])));
+        if(is::in($end,['json','txt','zip'])){
+          $to = $end;
+        }else{
+          $to = 'other';
+        }
+        $to = user::dir().'/file/'.$to;
       }else{
-        $to = 'other';
+        $to = $name;
       }
-      if(\move_uploaded_file($file['tmp_name'],user::dir().'/file/'.$to.'/'.$name.'.'.$end)){
+      if(\move_uploaded_file($file['tmp_name'],$to.'/'.$name.'.'.$end)){
         return true;
       }else{
         system::add_error('file::upload()','fail_upload','fail to upload file');
@@ -132,7 +137,14 @@
     }
 
     public static function delete($path){
-      unlink($path);
+      if(is::ary($path)){
+        ary::map($path,function($key,$value){
+          unlink($value);
+          return 0;
+        });
+      }else{
+        unlink($path);
+      }
     }
 
     public static function zip($path,$addfile){
@@ -151,6 +163,20 @@
       $zip->open($file);
       $zip->extractTo($path);
       $zip->close();
+    }
+
+    public static function create($name){
+      if(is::ary($name)){
+        foreach($name as $value){
+          $fp = fopen($value,'w');
+          fwrite($fp,"");
+          fclose($fp);
+        }
+      }else{
+        $fp = fopen($name,'w');
+        fwrite($fp,"");
+        fclose($fp);
+      }
     }
 
   }
