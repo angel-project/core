@@ -39,12 +39,20 @@
     }
 
     public static function post($input) {
+      //if(isset($_POST['fromPerson'])
       if(is::ary($input)){
         return ary::map($input,function($key,$value){
           return $_POST[$value];
         });
       }else{
-        return $input=='all' ? $_POST : $_POST[$input];
+        if($input=='all')
+        {
+          $_POST;
+        }
+        else if(!isset($_POST[$input]))
+        {
+          return false;
+        }
       }
     }
 
