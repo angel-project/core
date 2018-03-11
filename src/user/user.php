@@ -45,12 +45,11 @@
           return $_POST[$value];
         });
       }else{
-        if($input=='all')
-        {
-          $_POST;
-        }
-        else if(!isset($_POST[$input]))
-        {
+        if($input=='all'){
+          return $_POST;
+        }elseif(isset($_POST[$input])){
+          return $_POST[$input];
+        }else{
           return false;
         }
       }
@@ -61,16 +60,20 @@
     }
 
     public static function get($input) {
-      foreach (explode('&',explode('?', $_SERVER['REQUEST_URI'])[1]) as $value) {
-        $value = explode('=',$value);
-        $out[$value[0]] = $value[1];
-      }
-      if(is::ary($input)){
-        return ary::map($input,function($key,$value){
-          return $out[$value];
-        });
+      if(isset(explode('?',$_SERVER['REQUEST_URI'])[1])){
+        foreach (explode('&',explode('?', $_SERVER['REQUEST_URI'])[1]) as $value) {
+          $value = explode('=',$value);
+          $out[$value[0]] = $value[1];
+        }
+        if(is::ary($input)){
+          return ary::map($input,function($key,$value){
+            return $out[$value];
+          });
+        }else{
+          return $input=='all' ? $out : $out[$input];
+        }
       }else{
-        return $input=='all' ? $out : $out[$input];
+        return false;
       }
     }
 
