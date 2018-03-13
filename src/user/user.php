@@ -61,6 +61,7 @@
 
     public static function get($input) {
       if(isset(explode('?',$_SERVER['REQUEST_URI'])[1])){
+        $out = false;
         foreach (explode('&',explode('?', $_SERVER['REQUEST_URI'])[1]) as $value) {
           $value = explode('=',$value);
           $out[$value[0]] = $value[1];
@@ -70,7 +71,11 @@
             return $out[$value];
           });
         }else{
-          return $input=='all' ? $out : $out[$input];
+          if($out){
+            return $input=='all' ? $out : $out[$input];
+          }else{
+            return false;
+          }
         }
       }else{
         return false;
