@@ -72,7 +72,13 @@
           });
         }else{
           if($out){
-            return $input=='all' ? $out : $out[$input];
+            if($input!='all' && isset($out[$input])){
+              return $out[$input];
+            }elseif($input==='all'){
+              return $out;
+            }else{
+              return false;
+            }
           }else{
             return false;
           }
