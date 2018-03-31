@@ -75,7 +75,7 @@
 
     public static function utf8(string $in_p) {
       $value = str_replace("<br>","\n",$in_p);
-      return str_replace("&nbsp;"," ",$in_p);
+      return str_replace("&nbsp;"," ",$value);
     }
 
     public static function cut(string $in_p,$limit) {
