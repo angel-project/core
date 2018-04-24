@@ -129,10 +129,15 @@
     public static function size(array $array) {
       return sizeof($array);
     }
-    
+
     //return the last element of the array
     public static function last(array $array) {
         return array_values(array_slice($array, -1))[0];
+    }
+
+    //return the first element of the array
+    public static function first(array $array){
+      return array_values(array_slice($array,0))[0];
     }
 
   }
