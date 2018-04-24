@@ -23,5 +23,11 @@
   assert($test_flat_ary[0]==1&&$test_flat_ary[1]==2&&$test_flat_ary[2]==3&&
   $test_flat_ary[3]==4&&$test_flat_ary[4]==5&&$test_flat_ary[5]==6);
 
+  $test_last_ary = ary::last([1,2,3]);
+  assert($test_last_ary==3);
+
+  $test_first_ary = ary::first([1,2,3]);
+  assert($test_first_ary==1);
+
   echo "Array Test Finished!"."<br>";
 ?>
