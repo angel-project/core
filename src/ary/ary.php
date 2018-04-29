@@ -103,7 +103,10 @@
       }
     }
     //merge all the subarrays into a big array
-    public static function merge(array $array) {
+    public static function merge(array $array, array $b = []) {
+      if(!is::empty($b)){
+        $array = array($array,$b);
+      }
       return call_user_func_array('array_merge',$array);
     }
 

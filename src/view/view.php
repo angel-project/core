@@ -19,14 +19,18 @@
   namespace angel;
   class view {
 
-    private $global_array = [];
+    public static $global_array = [];
 
     public static function global(array $input){
-      $global_array = ary::merge([$global_array,$input]);
+      self::$global_array = ary::merge(self::$global_array,$input);
     }
 
-    public static function render(string $file, array $input){
-      $input = ary::merge([$global_array,$input]);
+    public static function render(string $file, array $input = []){
+      if(is::empty($input)){
+        $input = self::$global_array;
+      }else{
+        $input = ary::merge(self::$global_array,$input);
+      }
       ob_start();
       require user::dir().'/view/'.$file;
       $out = ob_get_contents();
