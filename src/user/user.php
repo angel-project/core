@@ -21,19 +21,19 @@
 
   namespace angel;
   class user {
-
+    //get the user uri
     public static function uri() {
       return ltrim(rtrim(explode('?', $_SERVER['REQUEST_URI'])[0],'/'),'/');
     }
-
+    //get the netserver port
     public static function port() {
       return $_SERVER['REMOTE_PORT'];
     }
-
+    //get user id
     public static function ip() {
       return $_SERVER['REMOTE_ADDR'];
     }
-
+    //get the explorer
     public static function agent() {
       return $_SERVER['HTTP_USER_AGENT'];
     }
