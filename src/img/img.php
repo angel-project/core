@@ -18,9 +18,10 @@
 
   namespace angel;
   class img {
-
+    //upload a image, set default quality to 100
     public static function upload($file,$name,$quality=100){
       if(!is::empty($file)){
+        //choose from different pic formats
         if(strpos(strtolower($file['name']),'png')){
           $quality = round($quality*0.1);
           $quality = $quality<9?$quality:9;

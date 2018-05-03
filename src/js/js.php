@@ -17,7 +17,7 @@
 
   namespace angel;
   class js {
-
+    //a simple js alert function
     public static function alert($content=''){
       echo "<script>alert('",$content,"')</script>";
     }

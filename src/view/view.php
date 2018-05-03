@@ -24,7 +24,7 @@
     public static function global(array $input){
       self::$global_array = ary::merge(self::$global_array,$input);
     }
-
+    //render a html5 file
     public static function render(string $file, array $input = []){
       if(is::empty($input)){
         $input = self::$global_array;
@@ -40,7 +40,7 @@
       $out = self::angel_if($out);
       return $out;
     }
-
+    //choose a css style file
     public static function style(array $input){
       $out = '';
       foreach ($input as $value) {
@@ -50,7 +50,7 @@
       }
       return $out;
     }
-
+    //embed a js script
     public static function script(array $input){
       $out = '';
       foreach ($input as $value) {

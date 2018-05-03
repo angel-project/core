@@ -74,10 +74,11 @@
 
   namespace angel;
   class file {
-
+    //upload a file with given name
     public static function upload($file,$name){
       if(!is::dir()){
         $end = str::lower(ary::last(str::split(".",$file['name'])));
+        //check for file formats
         if(is::in($end,['json','txt','zip'])){
           $to = $end;
         }else{
@@ -87,6 +88,7 @@
       }else{
         $to = $name;
       }
+      //return the uploading results
       if(\move_uploaded_file($file['tmp_name'],$to.'/'.$name.'.'.$end)){
         return true;
       }else{
@@ -94,7 +96,7 @@
         return false;
       }
     }
-
+    //read through a given path
     public static function read($path){
       if(is::ary($path)){
         return ary::map($path,function($key,$value){
@@ -104,15 +106,15 @@
         return file_get_contents($path);
       }
     }
-
+    //write a file with given path
     public static function write($path){
       foreach ($path as $key=>$value) {
         $fp = fopen($key,'w');
         fwrite($fp,$value);
         fclose($fp);
       }
-    }
-
+      }
+    //download a file, default download rate set to 20
     public static function download($path,$name,$download_rate=20){
       header('Content-Description: File Transfer');
       header('Content-Type: application/octet-stream');
@@ -135,7 +137,7 @@
       }
       fclose($file);
     }
-
+    //delete a file by unlinking
     public static function delete($path){
       if(is::ary($path)){
         ary::map($path,function($key,$value){
@@ -146,7 +148,7 @@
         unlink($path);
       }
     }
-
+    //zip a file
     public static function zip($path,$addfile){
       $fp = fopen($path,'wb');
       fclose($fp);
@@ -157,14 +159,14 @@
       }
       $zip->close();
     }
-
+    //unzip a file
     public static function unzip($file,$path){
       $zip = new \ZipArchive;
       $zip->open($file);
       $zip->extractTo($path);
       $zip->close();
     }
-
+    //create a blank file
     public static function create($name){
       if(is::ary($name)){
         foreach($name as $value){

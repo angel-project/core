@@ -33,16 +33,17 @@
     public static $post_methods = [];
 
     public static $get_methods = [];
-
+	//set up a router that response to POST requests
     public static function post($pattern, $method) {
       $list =& self::$post_methods;
+	  //check if keys conflict
       if(!array_key_exists($pattern, $list)) {
         $list[$pattern] = $method;
       }else {
         system::add_error('build::post()','conflict','method name '.$pattern.' in conflict');
       }
     }
-
+	//set up a router that response to GET requests
     public static function get($pattern, $method) {
       $list =& self::$get_methods;
       if(!array_key_exists($pattern, $list)) {
