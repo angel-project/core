@@ -31,7 +31,7 @@
 
   namespace angel;
   class jump {
-
+    //jump back to a history page
     public static function back($back=-1){
       if($back<0){
         echo "<script>history.go(".$back.");</script>";
@@ -39,11 +39,11 @@
         system::add_error('jump::back()','not_negative','only accepts negative input');
       }
     }
-
+    //change to some url
     public static function to($url){
       echo "<script>parent.location.href='".$url."'; </script>";
     }
-
+    //refresh current page
     public static function refresh(){
       header("Refresh:0");
     }
