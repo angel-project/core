@@ -251,7 +251,7 @@ class sql
             }
             $stmt->close();
             if (isset($out)) {
-                return sizeof($out)===1?$out[0]:$out;
+                return $out;
             } else {
                 return false;
             }
