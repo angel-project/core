@@ -24,7 +24,7 @@ class migration
 
     public static function table($name, $define)
     {
-        $log = json_decode(file::read(user::dir().'/migration/log.json'));
+        $log = json_decode(file::read(user::dir().'/migration/log.json'), true);
         if (!is::in($name, $log)) {
             $query = substr(call_user_func_array($define, [new migration($name)])->query, 0, -1).')';
             sql::run($query);
@@ -193,6 +193,13 @@ class migration
                 $this->query .= $n.' TIMESTAMP('.$length.'),';
             }
             $this->names[] = $n;
+        }
+    }
+
+    public function primary_key($n)
+    {
+        if (is::in($n, $this->names)) {
+            $this->query .= 'PRIMARY KEY ('.$n.' ),';
         }
     }
 }

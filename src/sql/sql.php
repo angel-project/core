@@ -71,7 +71,7 @@ class sql
 
     private static function connect()
     {
-        self::$connect = new mysqli(self::$config['address'], self::$config['username'], self::$config['password'], self::$config['database']);
+        self::$connect = new \mysqli(self::$config['address'], self::$config['username'], self::$config['password'], self::$config['database']);
         if (self::$connect->connect_error) {
             system::add_error('sql::config()', 'connect_fail', 'fail to connect to your MySQL database');
         }

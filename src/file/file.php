@@ -157,7 +157,7 @@ class file
     {
         $fp = fopen($path, 'wb');
         fclose($fp);
-        $zip = new ZipArchive;
+        $zip = new \ZipArchive;
         $zip->open($path);
         foreach ($addfile as $key=>$value) {
             $zip->addFile($key, $value);
@@ -167,7 +167,7 @@ class file
 
     public static function unzip($file, $path)
     {
-        $zip = new ZipArchive;
+        $zip = new \ZipArchive;
         $zip->open($file);
         $zip->extractTo($path);
         $zip->close();
