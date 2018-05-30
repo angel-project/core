@@ -15,11 +15,12 @@
   |
   */
 
-  namespace angel;
-  class js {
+namespace angel;
 
-    public static function alert($content=''){
-      echo "<script>alert('",$content,"')</script>";
+class js
+{
+    public static function alert($content='')
+    {
+        echo "<script>alert('",$content,"')</script>";
     }
-
-  }
+}

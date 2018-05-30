@@ -29,23 +29,26 @@
   |
   */
 
-  namespace angel;
-  class jump {
+namespace angel;
 
-    public static function back($back=-1){
-      if($back<0){
-        echo "<script>history.go(".$back.");</script>";
-      }else{
-        system::add_error('jump::back()','not_negative','only accepts negative input');
-      }
+class jump
+{
+    public static function back($back=-1)
+    {
+        if ($back<0) {
+            echo "<script>history.go(".$back.");</script>";
+        } else {
+            system::add_error('jump::back()', 'not_negative', 'only accepts negative input');
+        }
     }
 
-    public static function to($url){
-      echo "<script>parent.location.href='".$url."'; </script>";
+    public static function to($url)
+    {
+        echo "<script>parent.location.href='".$url."'; </script>";
     }
 
-    public static function refresh(){
-      header("Refresh:0");
+    public static function refresh()
+    {
+        header("Refresh:0");
     }
-
-  }
+}

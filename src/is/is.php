@@ -70,110 +70,124 @@
   |
   */
 
-  namespace angel;
-  class is {
+namespace angel;
+
+class is
+{
     //check if the users use mobile devices
-    public static function mobile() {
-      $agent = strtolower(user::agent());
-      return strpos($agent, 'mobile') || strpos($agent, 'android') || strpos($agent, 'iphone');
+    public static function mobile()
+    {
+        $agent = strtolower(user::agent());
+        return strpos($agent, 'mobile') || strpos($agent, 'android') || strpos($agent, 'iphone');
     }
     //check if the input #in_p is empty
-    public static function empty($in_p=null) {
-      $flag = false;
-      //check if the input is an array
-      if(is::ary($in_p)){
-        if(array_key_exists('error',$in_p)){
-          if($in_p['error'] === UPLOAD_ERR_NO_FILE){
-            $flag = true;
-          } //if $_FILES is empty
-        }elseif(empty($in_p)){
-          $flag = true; //if array as whole is empty
+    public static function empty($in_p=null)
+    {
+        $flag = false;
+        //check if the input is an array
+        if (is::ary($in_p)) {
+            if (array_key_exists('error', $in_p)) {
+                if ($in_p['error'] === UPLOAD_ERR_NO_FILE) {
+                    $flag = true;
+                } //if $_FILES is empty
+            } elseif (empty($in_p)) {
+                $flag = true; //if array as whole is empty
+            }
+        } else {//if the input is a string
+            if (empty($in_p)) {
+                $flag = true;
+            } //if str is empty
         }
-      }else{//if the input is a string
-        if(empty($in_p)){
-          $flag = true;
-        } //if str is empty
-      }
-      return $flag;
+        return $flag;
     }
     //check if the $input is an array
-    public static function ary($input) {
-      return is_array($input);
+    public static function ary($input)
+    {
+        return is_array($input);
     }
     //check if the $input is a string
-    public static function str($input) {
-      //get the type of the input
-      return gettype($input)==='string'?true:false;
+    public static function str($input)
+    {
+        //get the type of the input
+        return gettype($input)==='string'?true:false;
     }
     //check if the input is an integer
-    public static function int($input) {
-      return gettype($input)==='integer'?true:false;
+    public static function int($input)
+    {
+        return gettype($input)==='integer'?true:false;
     }
     //check if the input is a float numbers
-    public static function float($input) {
-      return is_float($input);
+    public static function float($input)
+    {
+        return is_float($input);
     }
 
-    public static function error($method,$error) {
-      return $method.':'.$error===system::$debug;
+    public static function error($method, $error)
+    {
+        return $method.':'.$error===system::$debug;
     }
     //check if the input is a regular expression
-    public static function regex($input) {
-      return @preg_match($input,'')!==false?true:false;
+    public static function regex($input)
+    {
+        return @preg_match($input, '')!==false?true:false;
     }
     //check if $part is in $full
-    public static function in($part,$full) {
-      $flag = false;
-      //when $full is an array
-      if(is::ary($full)){
-        //check each slot of the array
-        foreach ($full as $key=>$value) {
-          //if $part is a regular expression
-          if(is::regex($part)){
-            if(preg_match($part,$value)){
-              $flag = true;
+    public static function in($part, $full)
+    {
+        $flag = false;
+        //when $full is an array
+        if (is::ary($full)) {
+            //check each slot of the array
+            foreach ($full as $key=>$value) {
+                //if $part is a regular expression
+                if (is::regex($part)) {
+                    if (preg_match($part, $value)) {
+                        $flag = true;
+                    }
+                } else {
+                    if (!(strstr($value, $part)===false) or $value==$part) {
+                        $flag = true;
+                    }
+                }
             }
-          }else{
-            if(!(strstr($value,$part)===false) or $value==$part){
-              $flag = true;
+        } else {//if $full is not an array
+            if (is::regex($part)) {
+                if (preg_match($part, $full)) {
+                    $flag = true;
+                }
+            } else {
+                if (strstr($full, $part)!=false) {
+                    $flag = true;
+                }
             }
-          }
         }
-      }else{//if $full is not an array
-        if(is::regex($part)){
-          if(preg_match($part,$full)){
-            $flag = true;
-          }
-        }else{
-          if(strstr($full,$part)!=false){
-            $flag = true;
-          }
-        }
-      }
-      return $flag;
+        return $flag;
     }
     //check if any url is in the string and return the
     //url if there are any
-    public static function url(string $url){
-      return filter_var($url, FILTER_VALIDATE_URL);
+    public static function url(string $url)
+    {
+        return filter_var($url, FILTER_VALIDATE_URL);
     }
 
     //check if the input string has an directory and return the directory if there are any
-    public static function dir(string $dir){
-      return file_exists($dir);
+    public static function dir(string $dir)
+    {
+        return file_exists($dir);
     }
     //check if the input string has an email and return the email if there are any
-    public static function email(string $email){
-      return filter_var($email, FILTER_VALIDATE_EMAIL);
+    public static function email(string $email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
     //check if any array is multi-dimensional
-    public static function multi_layer($input){
-      $rv = array_filter($input,'is_array');
-      if(count($rv)>0){
-        return true;
-      }else{
-        return false;
-      }
+    public static function multi_layer($input)
+    {
+        $rv = array_filter($input, 'is_array');
+        if (count($rv)>0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-  }
+}
