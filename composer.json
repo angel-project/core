@@ -2,14 +2,9 @@
   "name": "angel-project/core",
   "description": "angel core methods live here.",
   "license": "MIT",
-  "authors": [
-    {
-      "name": "Xiao Zimo",
-      "email": "xiaozimo@zuggr.com"
-    }
-  ],
-  "optimize-autoloader": true,
-  "require": {
-    "php" : "^7.1.3"
-  }
+  "authors": [{
+    "name": "Xiao Zimo",
+    "email": "xiaozimo@zuggr.com"
+  }],
+  "optimize-autoloader": true
 }
