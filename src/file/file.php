@@ -78,10 +78,12 @@ class file
 {
     public static function upload($file, $name)
     {
-        if (!is::dir()) {
+        if (!is::dir($name)) {
             $end = str::lower(ary::last(str::split(".", $file['name'])));
             if (is::in($end, ['json','txt','zip'])) {
                 $to = $end;
+            } elseif (is::in($end, ['jpg', 'jpeg','png','gif'])) {
+                $to = 'img';
             } else {
                 $to = 'other';
             }
@@ -90,7 +92,7 @@ class file
             $to = $name;
         }
         if (\move_uploaded_file($file['tmp_name'], $to.'/'.$name.'.'.$end)) {
-            return true;
+            return $name.'.'.$end;
         } else {
             system::add_error('file::upload()', 'fail_upload', 'fail to upload file');
             return false;
