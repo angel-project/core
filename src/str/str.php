@@ -80,7 +80,10 @@ class str
     public static function utf8(string $in_p)
     {
         $value = str_replace("<br>", "\n", $in_p);
-        return str_replace("&nbsp;", " ", $value);
+        $value = str_replace("&nbsp;", " ", $value);
+        $value = preg_replace('/<([\s\S]*?)>/u', '', $value);
+        $value = preg_replace('/<\/([\s\S]*?)>/u', '', $value);
+        return $value;
     }
     //cut the given string and return the new string containing $limit characters
     public static function cut(string $in_p, $limit)

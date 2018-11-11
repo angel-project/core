@@ -77,55 +77,70 @@ class sql
         }
     }
 
-    public static function run($query)
+    public static function run($query, $database = null)
     {
         if (empty(self::$connect)) {
             self::connect();
+        }
+        if ($database != self::$config['database']) {
+            self::$connect->select_db($database);
         }
         if (!self::$connect->query($query)) {
             system::add_error('sql::run()', 'query_fail', 'fail to run query');
         }
     }
 
-    public static function select($table)
+    public static function select($table, $database = null)
     {
         self::$value = [];
         self::$query = null;
         if (empty(self::$connect)) {
-            self::connect();
+            self::connect($database);
+        }
+        if ($database != self::$config['database']) {
+            self::$connect->select_db($database);
         }
         self::$query = 'select * from '.$table;
         return new sql();
     }
 
-    public static function insert($table)
+    public static function insert($table, $database = null)
     {
         self::$query = null;
         self::$type = null;
         if (empty(self::$connect)) {
-            self::connect();
+            self::connect($database);
+        }
+        if ($database != self::$config['database']) {
+            self::$connect->select_db($database);
         }
         self::$query = 'insert into '.$table.' values ';
         self::$type = 'insert';
         return new sql();
     }
 
-    public static function delete($table)
+    public static function delete($table, $database = null)
     {
         self::$query = null;
         if (empty(self::$connect)) {
-            self::connect();
+            self::connect($database);
+        }
+        if ($database != self::$config['database']) {
+            self::$connect->select_db($database);
         }
         self::$query = 'delete from '.$table;
         return new sql();
     }
 
-    public static function update($table)
+    public static function update($table, $database = null)
     {
         self::$query = null;
         self::$type = null;
         if (empty(self::$connect)) {
-            self::connect();
+            self::connect($database);
+        }
+        if ($database != self::$config['database']) {
+            self::$connect->select_db($database);
         }
         self::$query = 'update '.$table.' set ';
         self::$type = 'update';
@@ -135,48 +150,48 @@ class sql
     public function this($bind, $add_on='none')
     {
         switch (self::$type) {
-        case 'insert':
-          $query = self::$query;
-          $value = [];
-          if (gettype($bind[0])==='array') {
-              $query .= rtrim(str_repeat('('.rtrim(str_repeat('?,', count($bind[0])), ',').'),', count($bind)), ',');
-              foreach ($bind as $i) {
-                  foreach ($i as $single_i) {
-                      array_push($value, $single_i);
-                  }
-              }
-          } else {
-              $query .= '('.rtrim(str_repeat('?,', count($bind)), ',').')';
-              foreach ($bind as $i) {
-                  array_push($value, $i);
-              }
-          }
-          self::$value = $value;
-          self::$query = $query;
-          self::execute();
-          break;
-        case 'update':
-          $query = self::$query;
-          $value = [];
-          if (is::str($bind)) {
-              if (is::ary($add_on)) {
-                  foreach ($add_on as $key=>$i) {
-                      array_push($value, $i);
-                  }
-              }
-              $query = $bind;
-          } else {
-              foreach ($bind as $key=>$i) {
-                  $query .= $key.'=?,';
-                  array_push($value, $i);
-              }
-              $query = rtrim($query, ',');
-              //if simple equal
-          }
-          self::$value = $value;
-          self::$query = $query;
-          return new sql();
-          break;
+          case 'insert':
+            $query = self::$query;
+            $value = [];
+            if (gettype($bind[0])==='array') {
+                $query .= rtrim(str_repeat('('.rtrim(str_repeat('?,', count($bind[0])), ',').'),', count($bind)), ',');
+                foreach ($bind as $i) {
+                    foreach ($i as $single_i) {
+                        array_push($value, $single_i);
+                    }
+                }
+            } else {
+                $query .= '('.rtrim(str_repeat('?,', count($bind)), ',').')';
+                foreach ($bind as $i) {
+                    array_push($value, $i);
+                }
+            }
+            self::$value = $value;
+            self::$query = $query;
+            self::execute();
+            break;
+          case 'update':
+            $query = self::$query;
+            $value = [];
+            if (is::str($bind)) {
+                if (is::ary($add_on)) {
+                    foreach ($add_on as $key=>$i) {
+                        array_push($value, $i);
+                    }
+                }
+                $query = $bind;
+            } else {
+                foreach ($bind as $key=>$i) {
+                    $query .= $key.'=?,';
+                    array_push($value, $i);
+                }
+                $query = rtrim($query, ',');
+                //if simple equal
+            }
+            self::$value = $value;
+            self::$query = $query;
+            return new sql();
+            break;
       }
     }
 
@@ -215,6 +230,7 @@ class sql
             $stmt->bind_param(...$in_p);
             $stmt->execute();
             $stmt->close();
+            self::$connect->select_db(self::$config['database']);
         } else {
             system::add_error('sql::execute()', 'query_fail', '"'.self::$query.'" query failed');
         }
@@ -250,6 +266,7 @@ class sql
                 $out[] = $row;
             }
             $stmt->close();
+            self::$connect->select_db(self::$config['database']);
             if (isset($out)) {
                 return $out;
             } else {
@@ -276,6 +293,7 @@ class sql
             $stmt->store_result();
             $result = $stmt->num_rows;
             $stmt->close();
+            self::$connect->select_db(self::$config['database']);
             return $result;
         } else {
             system::add_error('sql::count()', 'query_fail', '"'.self::$query.'" query failed');
